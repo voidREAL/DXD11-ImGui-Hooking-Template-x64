@@ -35,6 +35,7 @@ DWORD WINAPI HackThread(HMODULE hModule) {
 	}
 #endif
 	FreeLibraryAndExitThread(hModule, 0);
+	CloseHandle(hModule);
 	return 0;
 }
 
