@@ -162,6 +162,7 @@
     <ClCompile Include="imgui\imgui_impl_win32.cpp" />
     <ClCompile Include="imgui\imgui_tables.cpp" />
     <ClCompile Include="imgui\imgui_widgets.cpp" />
+    <ClCompile Include="memory\src\helper.cpp" />
     <ClCompile Include="MinHook\src\buffer.c" />
     <ClCompile Include="MinHook\src\hde\hde32.c" />
     <ClCompile Include="MinHook\src\hde\hde64.c" />
@@ -185,6 +186,7 @@
     <ClInclude Include="imgui\imstb_textedit.h" />
     <ClInclude Include="imgui\imstb_truetype.h" />
     <ClInclude Include="include\hooking.h" />
+    <ClInclude Include="memory\include\helper.h" />
     <ClInclude Include="memory\include\hook.h" />
     <ClInclude Include="memory\include\mem.h" />
     <ClInclude Include="MinHook\include\MinHook.h" />
