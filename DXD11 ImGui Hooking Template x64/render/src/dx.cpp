@@ -1,5 +1,8 @@
-﻿#include "../include/dx.h"
+﻿#define STB_IMAGE_IMPLEMENTATION
+
+#include "../include/dx.h"
 #include "../include/d3d11_vmt_indices.h"
+#include "../../utils/stb_image.h"
 #include <iostream>
 
 D3DX11 d3d11;
@@ -56,6 +59,41 @@ bool D3DX11::getDummyDeviceAndVtable()
 	}
 
 	return true;
+}
+
+ID3D11ShaderResourceView* D3DX11::createTextureFromBitmap(const unsigned char* pixels, size_t size)
+{
+	int w, h, comp;
+	unsigned char* imageData = stbi_load_from_memory(pixels, size, &w, &h, &comp, 4);
+
+	D3D11_TEXTURE2D_DESC desc = {};
+	desc.Width = w;
+	desc.Height = h;
+	desc.MipLevels = 1;
+	desc.ArraySize = 1;
+	desc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+	desc.SampleDesc.Count = 1;
+	desc.Usage = D3D11_USAGE_DEFAULT;
+	desc.BindFlags = D3D11_BIND_SHADER_RESOURCE;
+
+	D3D11_SUBRESOURCE_DATA initData = {};
+	initData.pSysMem = imageData;
+	initData.SysMemPitch = w * 4;
+
+	ID3D11Texture2D* texture = nullptr;
+
+	if (FAILED(device->CreateTexture2D(&desc, &initData, &texture))) {
+		return nullptr;
+	}
+
+	ID3D11ShaderResourceView* srv = nullptr;
+	if (FAILED(device->CreateShaderResourceView(texture, NULL, &srv))) {
+		texture->Release();
+		return nullptr;
+	}
+
+	texture->Release();
+	return srv;
 }
 
 bool D3DX11::getDeviceContextRenderTarget()

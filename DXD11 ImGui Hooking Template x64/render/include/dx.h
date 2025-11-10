@@ -25,6 +25,7 @@ public:
 	fnCreateSwapChain createSwapChainOriginal;
 
 	bool getDummyDeviceAndVtable();
+	ID3D11ShaderResourceView* createTextureFromBitmap(const unsigned char* pixels, size_t size);
 	bool getDeviceContextRenderTarget();
 	bool createRenderTarget();
 	HWND getHandleWindow();
